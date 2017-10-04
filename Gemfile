@@ -28,6 +28,9 @@ gem 'puma', '~> 3.7'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
+  gem 'json_spec'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
