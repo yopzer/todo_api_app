@@ -38,15 +38,6 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    data = ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:title, :tags])
-
-    if data[:tags]
-      data[:tags] = data[:tags].map do |tag_title|
-        # Consider wrapping tag creation and create/update in transaction
-        Api::V1::Tag.where(title: tag_title).first_or_create!
-      end
-    end
-
-    data
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: [:title, :tags])
   end
 end

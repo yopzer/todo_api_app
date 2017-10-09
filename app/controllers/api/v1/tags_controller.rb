@@ -1,6 +1,11 @@
 class Api::V1::TagsController < ApplicationController
   def index
-    tags = Api::V1::Tag.all
+    tags =
+      if params[:q]
+        Api::V1::Tag.by_title(params[:q])
+      else
+        Api::V1::Tag.all
+      end
 
     render json: tags
   end

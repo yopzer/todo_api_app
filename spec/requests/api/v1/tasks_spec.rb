@@ -35,14 +35,14 @@ RSpec.describe 'Tasks', type: :request do
     context 'with valid task data' do
       it 'creates task' do
         post '/api/v1/tasks', params: {
-          data: { attributes: { title: 'Test Task', tags: ['TestTag'] } }
+          data: { attributes: { title: 'Test Task', tags: ['TestTag', 'Test2'] } }
         }
 
         expect_json_response_with(
           {
             data: task_data(
               title:'Test Task',
-              tags: [{ id: '1', type: 'tags' }]
+              tags: [{ id: '1', type: 'tags' }, { id: '2', type: 'tags' }]
             )
           },
           status: :created
@@ -77,7 +77,7 @@ RSpec.describe 'Tasks', type: :request do
           data: {
             type: 'tasks',
             id: task.id.to_s,
-            attributes: { title: 'Changed Task', tags: ['TestTag'] }
+            attributes: { title: 'Changed Task', tags: ['TestTag', 'Test2'] }
           }
         }
 
@@ -86,7 +86,7 @@ RSpec.describe 'Tasks', type: :request do
             data: task_data(
               title:'Changed Task',
               id: task.id.to_s,
-              tags: [{ id: '1', type: 'tags' }]
+              tags: [{ id: '1', type: 'tags' }, { id: '2', type: 'tags' }]
             )
           }
         )

@@ -19,6 +19,23 @@ RSpec.describe 'Tags', type: :request do
         expect_json_response_with({ data: [tag_data(title:'Test Tag')] })
       end
     end
+
+    context 'filter by title' do
+      it 'returns tag list' do
+        Api::V1::Tag.create(title: 'Test Tag')
+        Api::V1::Tag.create(title: 'Test Tag1')
+        Api::V1::Tag.create(title: 'Tag1')
+
+        get '/api/v1/tags', params: { q: 'est' }
+
+        expect_json_response_with({
+          data: [
+            tag_data(title:'Test Tag'),
+            tag_data(title:'Test Tag1', id: '2')
+          ]
+        })
+      end
+    end
   end
 
   describe 'POST /api/v1/tags' do
